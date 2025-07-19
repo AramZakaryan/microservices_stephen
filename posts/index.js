@@ -27,7 +27,7 @@ app.post('/posts', async (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-    console.log(`in posts`, req.body)
+    res.send({status:'Ok'})
 })
 
 

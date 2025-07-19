@@ -27,7 +27,7 @@ app.post('/posts/:postId/comments', async (req, res) => {
 
     const commentsArray = commentsByPostId[postId] || []
 
-    const newComment = {id: commentId, content}
+    const newComment = {id: commentId, content, status: 'pending'};
 
     commentsArray.push(newComment)
 
@@ -44,8 +44,21 @@ app.post('/posts/:postId/comments', async (req, res) => {
 
 })
 
-app.post('/events', (req, res) => {
-    console.log(`in comments`, req.body)
+app.post('/events', async (req, res) => {
+    const {body} = req
+    const {type, data} = body
+
+    if (type === 'comment_moderated') {
+        const {id, content, status, postId} = data
+
+        const comments = commentsByPostId[postId]
+        let index = comments.findIndex(comment => comment.id === id)
+        comments[index] = {...comments[index], content, status}
+
+        await axios.post(`http://localhost:4004/events`, {type: 'comment_updated', data})
+
+    }
+    res.send({status: 'Ok'})
 })
 
 

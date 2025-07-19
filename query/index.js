@@ -36,7 +36,6 @@ app.post('/events', (req, res) => {
         const {body} = req
         const {type, data} = body
 
-
         switch (type) {
             case 'post_created': {
                 const {id, title} = data
@@ -46,11 +45,21 @@ app.post('/events', (req, res) => {
                 break
             }
             case 'comment_created': {
-                const {id, content, postId} = data
+                const {id, content, status, postId} = data
 
                 const post = posts[postId]
                 const comments = post.comments
-                comments.push({id, content})
+                comments.push({id, content, status})
+                break
+            }
+            case 'comment_updated': {
+                const {id, content, status, postId} = data
+
+                const post = posts[postId]
+                const comments = post.comments
+                let index = comments.findIndex(comment => comment.id === id)
+                comments[index] = {...comments[index], content, status}
+
                 break
             }
             default: {
