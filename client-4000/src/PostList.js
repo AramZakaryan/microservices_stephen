@@ -16,7 +16,6 @@ const PostList = ({posts = []}) => {
     // }, []);
 
     const renderedPosts = Object.values(posts).map((post) => {
-        console.log(post)
         return (
             <div
                 className="card"
