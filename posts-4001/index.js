@@ -1,3 +1,5 @@
+// posts-4001/index.js
+
 const express = require("express")
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -27,12 +29,13 @@ app.post('/posts', async (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-    res.send({status:'Ok'})
+    res.send({status: 'Ok'})
 })
 
 
 const port = 4001
 
 app.listen(port, () => {
+    console.log(`this is posts service v.1.0.5`)
     console.log(`listening port ${port} for posts`)
 })

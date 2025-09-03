@@ -1,0 +1,17 @@
+# posts-srv.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  type: NodePort
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
+      nodePort: 30001
+
